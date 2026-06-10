@@ -1,0 +1,8 @@
+legacy_flask_backup/
+__pycache__/
+.DS_Store
+public_url.txt
+*.pyc
+.vercel/
+.netlify/
+node_modules/
