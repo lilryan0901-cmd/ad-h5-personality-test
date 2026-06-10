@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AD钙奶童年风味人格鉴定 H5互动测试</title>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+  <style>
+    :root {
+      --green: #2aa96b;
+      --deep: #137544;
+      --mint: #ddf8df;
+      --cream: #fffaf0;
+      --paper: #fffdf3;
+      --pink: #ff86ad;
+      --peach: #ffb387;
+      --berry: #ff5b84;
+      --blue: #7dc9ff;
+      --ink: #25523c;
+      --shadow: 0 12px 30px rgba(29, 105, 65, .15);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255, 214, 123, .28) 0 9px, transparent 10px),
+        radial-gradient(circle at 82% 12%, rgba(255, 134, 173, .18) 0 12px, transparent 13px),
+        linear-gradient(135deg, #edfce9 0%, #fff9dc 42%, #e6f7df 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .34;
+      background-image:
+        linear-gradient(rgba(42, 169, 107, .10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(42, 169, 107, .10) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+
+    .app {
+      width: min(100%, 780px);
+      margin: 0 auto;
+      padding: 14px 14px 34px;
+      position: relative;
+    }
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 2px 12px;
+      backdrop-filter: blur(14px);
+    }
+
+    .top-nav span {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px dashed rgba(19, 117, 68, .35);
+      background: rgba(255, 253, 243, .82);
+      font-size: 13px;
+      box-shadow: 0 6px 14px rgba(37, 82, 60, .08);
+    }
+
+    .top-nav .active {
+      color: #fff;
+      background: var(--green);
+      border-color: var(--green);
+      font-weight: 800;
+    }
+
+    .paper {
+      overflow: hidden;
+      border: 2px dashed rgba(19, 117, 68, .45);
+      border-radius: 28px;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, .42) 50%, transparent 50%) 0 0 / 18px 18px,
+        var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .home, .quiz, .result {
+      padding: 22px 18px 26px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--mint);
+      color: var(--deep);
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid rgba(42, 169, 107, .25);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin: 13px 0 8px;
+      font-size: clamp(34px, 9vw, 58px);
+      line-height: 1.03;
+      letter-spacing: 0;
+      color: var(--deep);
+    }
+
+    .lead {
+      line-height: 1.75;
+      color: #52745f;
+      font-size: 15px;
+    }
+
+    .hero-board {
+      position: relative;
+      margin: 18px 0;
+      min-height: 260px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255, 255, 255, .96) 0 92px, transparent 93px),
+        radial-gradient(circle at 16% 21%, rgba(255, 134, 173, .35), transparent 86px),
+        radial-gradient(circle at 84% 22%, rgba(125, 201, 255, .34), transparent 80px),
+        linear-gradient(145deg, #dff9d8, #fff7c7);
+      border: 2px solid rgba(42, 169, 107, .22);
+      box-shadow: inset 0 0 0 8px rgba(255, 255, 255, .35);
+    }
+
+    .flavor-card {
+      position: absolute;
+      width: 108px;
+      padding: 10px;
+      border-radius: 18px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 900;
+      background: rgba(255,255,255,.9);
+      border: 1px dashed rgba(19,117,68,.28);
+      box-shadow: 0 10px 18px rgba(37, 82, 60, .13);
+      transform: rotate(var(--r));
+    }
+
+    .flavor-card b {
+      display: block;
+      font-size: 25px;
+      margin-bottom: 3px;
+    }
+
+    .fc1 { left: 7%; top: 22px; --r: -7deg; }
+    .fc2 { right: 7%; top: 24px; --r: 6deg; }
+    .fc3 { left: 3%; bottom: 26px; --r: 5deg; }
+    .fc4 { right: 3%; bottom: 28px; --r: -5deg; }
+    .fc5 { left: 50%; top: 50%; translate: -50% -50%; --r: 0deg; width: 130px; }
+
+    .hero-bottle {
+      width: 96px;
+      height: 154px;
+      margin: 12px auto 4px;
+      position: relative;
+      border-radius: 34px 34px 26px 26px;
+      background: linear-gradient(#ffffff 0 28%, #caf8cf 29% 54%, #ffffff 55% 100%);
+      border: 4px solid var(--deep);
+      box-shadow: 0 13px 0 rgba(19,117,68,.12);
+    }
+
+    .hero-bottle::before {
+      content: "";
+      position: absolute;
+      width: 44px;
+      height: 20px;
+      left: 50%;
+      top: -24px;
+      translate: -50% 0;
+      border-radius: 10px 10px 5px 5px;
+      background: var(--green);
+      border: 4px solid var(--deep);
+    }
+
+    .hero-bottle::after {
+      content: "AD";
+      position: absolute;
+      inset: 58px 18px auto;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: #fff5b8;
+      color: var(--deep);
+      border: 2px solid var(--deep);
+      font-size: 23px;
+      font-weight: 1000;
+    }
+
+    .info-box {
+      padding: 15px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.74);
+      border: 1px dashed rgba(19,117,68,.28);
+      line-height: 1.78;
+      box-shadow: 0 8px 18px rgba(37,82,60,.08);
+    }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      cursor: pointer;
+      margin-top: 16px;
+      padding: 15px 18px;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--green), #74c948);
+      font-weight: 1000;
+      font-size: 17px;
+      box-shadow: 0 12px 0 rgba(19, 117, 68, .18), 0 16px 26px rgba(42,169,107,.25);
+    }
+
+    .btn.secondary {
+      color: var(--deep);
+      background: #fff7bd;
+      border: 2px dashed rgba(19,117,68,.28);
+      box-shadow: 0 10px 18px rgba(37,82,60,.12);
+    }
+
+    .hidden { display: none !important; }
+
+    .progress {
+      height: 12px;
+      border-radius: 99px;
+      background: #e4f1d3;
+      overflow: hidden;
+      border: 1px solid rgba(19,117,68,.18);
+      margin: 16px 0;
+    }
+
+    .progress i {
+      display: block;
+      height: 100%;
+      width: 20%;
+      background: repeating-linear-gradient(45deg, var(--green) 0 10px, #8bd460 10px 20px);
+      border-radius: inherit;
+      transition: width .25s ease;
+    }
+
+    .question-title {
+      font-size: 24px;
+      line-height: 1.3;
+      color: var(--deep);
+    }
+
+    .option-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .option {
+      width: 100%;
+      border: 1px solid rgba(42,169,107,.22);
+      border-radius: 18px;
+      padding: 14px;
+      text-align: left;
+      background: rgba(255,255,255,.82);
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.55;
+      box-shadow: 0 8px 16px rgba(37,82,60,.08);
+    }
+
+    .option:active { transform: translateY(2px); }
+
+    .poster-wrap {
+      padding: 12px;
+      border-radius: 26px;
+      background: linear-gradient(145deg, #b9efbd, #fff1b9);
+      box-shadow: var(--shadow);
+      border: 2px dashed rgba(19,117,68,.35);
+    }
+
+    .poster-art {
+      position: relative;
+      overflow: hidden;
+      min-height: 590px;
+      border-radius: 22px;
+      padding: 22px 18px;
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255,255,255,.9) 0 34px, transparent 35px),
+        radial-gradient(circle at 85% 20%, rgba(255,255,255,.7) 0 48px, transparent 49px),
+        linear-gradient(160deg, var(--soft), #fffce5 54%, #dff7d4);
+      border: 2px solid rgba(255,255,255,.9);
+    }
+
+    .poster-art::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 2px dashed rgba(19,117,68,.30);
+      border-radius: 18px;
+      pointer-events: none;
+    }
+
+    .poster-kicker {
+      position: relative;
+      display: inline-flex;
+      padding: 7px 12px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.74);
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--deep);
+      border: 1px solid rgba(19,117,68,.20);
+    }
+
+    .poster-title {
+      position: relative;
+      margin: 12px 0 3px;
+      color: var(--deep);
+      font-size: 32px;
+      line-height: 1.12;
+      font-weight: 1000;
+    }
+
+    .poster-subtitle {
+      position: relative;
+      color: #5d7d66;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .bottle-stage {
+      position: relative;
+      height: 292px;
+      display: grid;
+      place-items: center;
+    }
+
+    .cute-bottle {
+      position: relative;
+      width: 148px;
+      height: 236px;
+      border: 5px solid var(--deep);
+      border-radius: 50px 50px 34px 34px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.95) 0 28%, var(--main) 29% 55%, rgba(255,255,255,.96) 56% 100%);
+      box-shadow: 0 22px 0 rgba(19,117,68,.12), inset -14px -10px 0 rgba(0,0,0,.04);
+      z-index: 2;
+      animation: floaty 2.5s ease-in-out infinite;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: rotate(-2deg) translateY(0); }
+      50% { transform: rotate(2deg) translateY(-8px); }
+    }
+
+    .cap {
+      position: absolute;
+      left: 50%;
+      top: -35px;
+      translate: -50% 0;
+      width: 68px;
+      height: 34px;
+      border-radius: 16px 16px 8px 8px;
+      background: repeating-linear-gradient(90deg, var(--main) 0 8px, var(--band) 8px 16px);
+      border: 5px solid var(--deep);
+    }
+
+    .face {
+      position: absolute;
+      left: 50%;
+      top: 42px;
+      translate: -50% 0;
+      font-size: 34px;
+      filter: drop-shadow(0 3px 0 rgba(255,255,255,.75));
+    }
+
+    .label {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      top: 112px;
+      min-height: 70px;
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      border-radius: 22px;
+      background: #fff8bd;
+      border: 3px solid var(--deep);
+      color: var(--deep);
+      font-weight: 1000;
+      line-height: 1.12;
+      box-shadow: inset 0 -6px 0 rgba(255,185,72,.18);
+    }
+
+    .label small {
+      display: block;
+      font-size: 12px;
+      margin-top: 3px;
+      color: #6b8144;
+    }
+
+    .arm, .leg {
+      position: absolute;
+      background: var(--deep);
+      border-radius: 99px;
+    }
+
+    .arm {
+      width: 47px;
+      height: 9px;
+      top: 116px;
+      z-index: -1;
+    }
+
+    .arm.left { left: -38px; rotate: -27deg; }
+    .arm.right { right: -38px; rotate: 27deg; }
+
+    .leg {
+      width: 16px;
+      height: 38px;
+      bottom: -27px;
+    }
+
+    .leg.left { left: 42px; rotate: 8deg; }
+    .leg.right { right: 42px; rotate: -8deg; }
+
+    .poster-sticker {
+      position: absolute;
+      z-index: 3;
+      max-width: 122px;
+      padding: 8px 10px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.86);
+      border: 1px dashed rgba(19,117,68,.30);
+      box-shadow: 0 9px 14px rgba(37,82,60,.10);
+      font-size: 12px;
+      font-weight: 900;
+      transform: rotate(var(--r));
+    }
+
+    .sticker-0 { left: 15px; top: 135px; --r: -8deg; }
+    .sticker-1 { right: 13px; top: 142px; --r: 7deg; }
+    .sticker-2 { left: 19px; bottom: 198px; --r: 6deg; }
+    .sticker-3 { right: 20px; bottom: 198px; --r: -6deg; }
+    .sticker-4 { left: 50%; bottom: 156px; translate: -50% 0; --r: 1deg; }
+
+    .poster-list {
+      position: relative;
+      display: grid;
+      gap: 8px;
+      margin: 10px 0 12px;
+      text-align: left;
+    }
+
+    .poster-list div {
+      padding: 10px 12px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(19,117,68,.14);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .coupon {
+      position: relative;
+      padding: 13px;
+      border-radius: 18px;
+      background: #fff3ad;
+      border: 2px dashed var(--deep);
+      font-weight: 1000;
+      color: var(--deep);
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .score {
+      padding: 12px;
+      border-radius: 17px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(19,117,68,.18);
+      box-shadow: 0 6px 14px rgba(37,82,60,.08);
+    }
+
+    .score b {
+      display: block;
+      font-size: 22px;
+      color: var(--deep);
+    }
+
+    .footer-slogan {
+      text-align: center;
+      padding: 18px 8px 0;
+      color: var(--deep);
+      font-weight: 1000;
+      letter-spacing: 0;
+    }
+
+    @media (min-width: 680px) {
+      .home, .quiz, .result { padding: 34px; }
+      .option-grid { grid-template-columns: repeat(2, 1fr); }
+      .poster-art { min-height: 640px; padding: 28px; }
+      .poster-title { font-size: 40px; }
+      .bottle-stage { height: 320px; }
+      .cute-bottle { width: 166px; height: 260px; }
+      .label { top: 126px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <nav class="top-nav" aria-label="策划导航">
+      <span>爆发期 5.24-6.05</span>
+      <span>市场分析</span>
+      <span>主题推导</span>
+      <span class="active">营销策划</span>
+      <span>媒介排期</span>
+    </nav>
+
+    <section class="paper home" id="homePage">
+      <span class="eyebrow">H5互动测试</span>
+      <h1>童年风味人格鉴定</h1>
+      <p class="lead">把一口 AD 钙奶的酸甜记忆，变成你的童年人格标签。</p>
+
+      <div class="hero-board" aria-label="五类人格转盘">
+        <div class="flavor-card fc1"><b>🧃</b>逆龄胶原系</div>
+        <div class="flavor-card fc2"><b>🥛</b>经典引力系</div>
+        <div class="flavor-card fc3"><b>🍑</b>浪漫蜜桃系</div>
+        <div class="flavor-card fc4"><b>🍓</b>元气草莓系</div>
+        <div class="flavor-card fc5"><div class="hero-bottle"></div>畅爽茵茵系</div>
+      </div>
+
+      <div class="info-box">
+        开发一款童年风味人格测试 H5，通过类似 MBTI 的轻量心理题，计算用户的“酸甜人格比例”。测试结果生成专属童趣人格瓶海报，并派发对应口味的线上 / 线下兑换券。
+      </div>
+
+      <button class="btn" id="startBtn" type="button">开始鉴定我的童年风味</button>
+    </section>
+
+    <section class="paper quiz hidden" id="quizPage">
+      <span class="eyebrow" id="stepText">第 1 / 5 题</span>
+      <div class="progress"><i id="progressBar"></i></div>
+      <h2 class="question-title" id="questionTitle"></h2>
+      <div class="option-grid" id="optionGrid"></div>
+    </section>
+
+    <section class="result hidden" id="resultPage">
+      <div class="poster-wrap">
+        <div id="posterArt" class="poster-art"></div>
+      </div>
+      <div class="score-grid" id="scoreGrid"></div>
+      <button class="btn" id="savePosterBtn" type="button">保存我的人格瓶海报</button>
+      <button class="btn secondary" id="restartBtn" type="button">再测一次童年风味</button>
+    </section>
+
+    <div class="footer-slogan">快乐不分大小，酸甜此刻正好</div>
+  </main>
+
+  <script>
+    const questionPool = [
+      {
+        title: "放学铃响后，你最想冲向哪里？",
+        options: [
+          { text: "小卖部，先买一瓶冰冰的快乐", type: "energy" },
+          { text: "操场边，慢慢等风吹过来", type: "pure" },
+          { text: "和朋友绕远路，聊到天黑", type: "sweet" },
+          { text: "去看橱窗里新出的桃味零食", type: "sour" }
+        ]
+      },
+      {
+        title: "你的童年书包里最可能藏着什么？",
+        options: [
+          { text: "一张舍不得用的贴纸", type: "sweet" },
+          { text: "半包跳跳糖和新的计划", type: "energy" },
+          { text: "写满心事的小纸条", type: "sour" },
+          { text: "干净叠好的纸巾和备用笔", type: "pure" }
+        ]
+      },
+      {
+        title: "朋友临时喊你出门，你的第一反应是？",
+        options: [
+          { text: "马上换鞋，快乐要趁热", type: "energy" },
+          { text: "确认路线和天气，稳稳出发", type: "pure" },
+          { text: "带上大家都爱喝的那一瓶", type: "sweet" },
+          { text: "问问有没有适合拍照的地方", type: "sour" }
+        ]
+      },
+      {
+        title: "遇到一点小委屈，你更像哪种口味？",
+        options: [
+          { text: "酸一下就过去，还会认真发光", type: "sour" },
+          { text: "喝口甜的，把心情重新抱住", type: "sweet" },
+          { text: "跑两圈，烦恼自动掉线", type: "energy" },
+          { text: "先安静一会儿，把自己整理好", type: "pure" }
+        ]
+      },
+      {
+        title: "你负责班级活动，会把重点放在哪里？",
+        options: [
+          { text: "氛围要热闹，大家都要笑出来", type: "energy" },
+          { text: "流程要清楚，体验要舒服", type: "pure" },
+          { text: "准备经典环节，谁都能参与", type: "sweet" },
+          { text: "做一个漂亮主题，让人记很久", type: "sour" }
+        ]
+      },
+      {
+        title: "如果把周末变成一张贴纸，你会选？",
+        options: [
+          { text: "桃色云朵，适合慢慢做梦", type: "sour" },
+          { text: "牛奶瓶盖，经典又安心", type: "sweet" },
+          { text: "草莓闪电，能量一直在线", type: "energy" },
+          { text: "透明水滴，清爽得刚刚好", type: "pure" }
+        ]
+      },
+      {
+        title: "你在合照里通常扮演什么角色？",
+        options: [
+          { text: "负责喊口号，让大家笑开", type: "energy" },
+          { text: "站在熟悉的人旁边，暖暖陪着", type: "sweet" },
+          { text: "找角度和滤镜，画面要可爱", type: "sour" },
+          { text: "提醒大家别挡光，画面干净", type: "pure" }
+        ]
+      },
+      {
+        title: "你最喜欢哪种快乐瞬间？",
+        options: [
+          { text: "第一口冰凉酸甜撞上夏天", type: "energy" },
+          { text: "老朋友递来熟悉的味道", type: "sweet" },
+          { text: "晚霞把一切染成蜜桃色", type: "sour" },
+          { text: "雨后空气清清爽爽", type: "pure" }
+        ]
+      },
+      {
+        title: "面对新鲜事物，你通常会？",
+        options: [
+          { text: "先试一口，好玩再说", type: "energy" },
+          { text: "看看评价，再温柔靠近", type: "sour" },
+          { text: "找熟人一起，快乐翻倍", type: "sweet" },
+          { text: "先理解规则，再做决定", type: "pure" }
+        ]
+      }
+    ];
+
+    const resultMap = {
+      sour: {
+        title: "浪漫蜜桃系",
+        subtitle: "酸涩值闪闪发光的温柔收藏家",
+        label: "桃味心事",
+        bottleName: "蜜桃心动 AD 瓶",
+        band: "#ffd56f",
+        face: "◕‿◕",
+        main: "#ff9fbc",
+        soft: "#ffe1e8",
+        descList: ["你把普通日子过成贴纸本，每一页都有小小仪式感。", "你不怕一点点酸涩，因为那正是回忆变甜的开始。", "适合把心情晒在晚霞里，再喝一口童年味道。"],
+        stickers: ["🍑 温柔治愈", "🎒 放学路上", "🍬 酸甜刚好", "🌈 快乐发射", "✨ 心事发光"],
+        coupon: "专属券：蜜桃风味第二瓶半价券"
+      },
+      sweet: {
+        title: "经典引力系",
+        subtitle: "回甘值拉满的童年安全感担当",
+        label: "经典回甘",
+        bottleName: "经典不败 AD 瓶",
+        band: "#8bd460",
+        face: "＾▽＾",
+        main: "#fff4a7",
+        soft: "#fff8cf",
+        descList: ["你像小卖部冰柜里的老朋友，出现就让人安心。", "你的甜不是夸张，是刚刚好地接住每一个人。", "越长大越珍贵的，是你一直保留的真诚口感。"],
+        stickers: ["🥛 经典不败", "🍬 酸甜刚好", "🎒 放学路上", "🌈 快乐发射", "🧃 童年回甘"],
+        coupon: "专属券：经典原味线上兑换券"
+      },
+      energy: {
+        title: "元气草莓系",
+        subtitle: "活力值爆表的快乐发动机",
+        label: "元气开瓶",
+        bottleName: "草莓活力 AD 瓶",
+        band: "#ffcf5a",
+        face: "≧◡≦",
+        main: "#ff6f95",
+        soft: "#ffe0dc",
+        descList: ["你一出现，空气就像被摇匀的草莓气泡。", "行动力是你的隐藏糖分，想到就出发。", "你适合带着朋友一起，把平凡下午变成冒险。"],
+        stickers: ["🍓 元气满格", "🌈 快乐发射", "🍬 酸甜刚好", "🎒 放学路上", "⚡ 活力开瓶"],
+        coupon: "专属券：草莓风味线下买赠券"
+      },
+      pure: {
+        title: "纯净担当系",
+        subtitle: "纯净值很高的清爽治愈派",
+        label: "清爽担当",
+        bottleName: "畅爽茵茵 AD 瓶",
+        band: "#7dc9ff",
+        face: "•‿•",
+        main: "#9fe8c1",
+        soft: "#ddf8df",
+        descList: ["你像雨后操场的风，清清爽爽但很有力量。", "你的快乐不吵闹，却能让人慢慢放松下来。", "你适合把复杂世界调成低糖清爽模式。"],
+        stickers: ["💧 清爽担当", "🥛 经典不败", "🎒 放学路上", "🍬 酸甜刚好", "🌿 纯净在线"],
+        coupon: "专属券：畅爽茵茵尝鲜兑换券"
+      },
+      collagen: {
+        title: "逆龄胶原系",
+        subtitle: "童心浓度超标的逆龄玩家",
+        label: "逆龄童心",
+        bottleName: "胶原童心 AD 瓶",
+        band: "#ffb387",
+        face: "＾ᴗ＾",
+        main: "#ffa66e",
+        soft: "#ffe7cc",
+        descList: ["你把长大过成了升级版童年，认真生活也认真可爱。", "你会在细节里找快乐，让记忆重新变得Q弹。", "适合把今天也盖上一枚童心印章。"],
+        stickers: ["🧃 逆龄补给", "🍬 酸甜刚好", "🎒 放学路上", "🌈 快乐发射", "⭐ 童心营业"],
+        coupon: "专属券：逆龄胶原风味体验券"
+      }
+    };
+
+    const typeNames = {
+      sour: "酸涩值",
+      sweet: "回甘值",
+      energy: "活力值",
+      pure: "纯净值"
+    };
+
+    const startBtn = document.querySelector("#startBtn");
+    const restartBtn = document.querySelector("#restartBtn");
+    const savePosterBtn = document.querySelector("#savePosterBtn");
+    const homePage = document.querySelector("#homePage");
+    const quizPage = document.querySelector("#quizPage");
+    const resultPage = document.querySelector("#resultPage");
+    const stepText = document.querySelector("#stepText");
+    const progressBar = document.querySelector("#progressBar");
+    const questionTitle = document.querySelector("#questionTitle");
+    const optionGrid = document.querySelector("#optionGrid");
+    const posterArt = document.querySelector("#posterArt");
+    const scoreGrid = document.querySelector("#scoreGrid");
+
+    let selectedQuestions = [];
+    let currentIndex = 0;
+    let scores = { sour: 0, sweet: 0, energy: 0, pure: 0 };
+
+    function shuffle(list) {
+      return [...list].sort(() => Math.random() - 0.5);
+    }
+
+    function startQuiz() {
+      selectedQuestions = shuffle(questionPool).slice(0, 5).map((item) => ({
+        ...item,
+        options: shuffle(item.options)
+      }));
+      currentIndex = 0;
+      scores = { sour: 0, sweet: 0, energy: 0, pure: 0 };
+      homePage.classList.add("hidden");
+      resultPage.classList.add("hidden");
+      quizPage.classList.remove("hidden");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = selectedQuestions[currentIndex];
+      stepText.textContent = `第 ${currentIndex + 1} / ${selectedQuestions.length} 题`;
+      progressBar.style.width = `${((currentIndex + 1) / selectedQuestions.length) * 100}%`;
+      questionTitle.textContent = q.title;
+      optionGrid.innerHTML = "";
+      q.options.forEach((option) => {
+        const btn = document.createElement("button");
+        btn.className = "option";
+        btn.type = "button";
+        btn.textContent = option.text;
+        btn.addEventListener("click", () => chooseOption(option.type));
+        optionGrid.appendChild(btn);
+      });
+    }
+
+    function chooseOption(type) {
+      scores[type] += 1;
+      currentIndex += 1;
+      if (currentIndex >= selectedQuestions.length) {
+        showResult();
+      } else {
+        renderQuestion();
+      }
+    }
+
+    function showResult() {
+      quizPage.classList.add("hidden");
+      resultPage.classList.remove("hidden");
+      const total = Object.values(scores).reduce((sum, n) => sum + n, 0) || 1;
+      const percentages = Object.fromEntries(Object.entries(scores).map(([key, value]) => [key, Math.round(value / total * 100)]));
+      const winner = ["sour", "sweet", "energy", "pure"].sort((a, b) => scores[b] - scores[a])[0];
+      const result = resultMap[winner];
+      posterArt.innerHTML = buildPosterArt(result);
+      scoreGrid.innerHTML = Object.entries(percentages).map(([key, value]) => `
+        <div class="score"><span>${typeNames[key]}</span><b>${value}%</b></div>
+      `).join("");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function buildPosterArt(result) {
+      const stickerHtml = shuffle(result.stickers).slice(0, 5).map((text, index) => (
+        `<span class="poster-sticker sticker-${index}">${text}</span>`
+      )).join("");
+
+      return `
+        <div style="--main:${result.main};--soft:${result.soft};--band:${result.band}">
+          <span class="poster-kicker">AD钙奶 童年风味人格鉴定</span>
+          <h2 class="poster-title">${result.title}</h2>
+          <p class="poster-subtitle">${result.subtitle}</p>
+          <div class="bottle-stage">
+            ${stickerHtml}
+            <div class="cute-bottle" aria-label="${result.bottleName}">
+              <span class="cap"></span>
+              <span class="face">${result.face}</span>
+              <span class="arm left"></span>
+              <span class="arm right"></span>
+              <span class="leg left"></span>
+              <span class="leg right"></span>
+              <div class="label">${result.label}<small>${result.bottleName}</small></div>
+            </div>
+          </div>
+          <div class="poster-list">
+            ${result.descList.map((item) => `<div>✦ ${item}</div>`).join("")}
+          </div>
+          <div class="coupon">${result.coupon}</div>
+        </div>
+      `;
+    }
+
+    async function savePoster() {
+      if (!window.html2canvas) {
+        alert("海报保存功能加载失败，请检查网络后重试");
+        return;
+      }
+      try {
+        const canvas = await html2canvas(posterArt, {
+          backgroundColor: null,
+          scale: Math.min(3, window.devicePixelRatio || 2)
+        });
+        const link = document.createElement("a");
+        link.download = "童年风味人格瓶海报.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      } catch (error) {
+        alert("海报保存功能加载失败，请检查网络后重试");
+      }
+    }
+
+    startBtn.addEventListener("click", startQuiz);
+    restartBtn.addEventListener("click", startQuiz);
+    savePosterBtn.addEventListener("click", savePoster);
+  </script>
+</body>
+</html>
