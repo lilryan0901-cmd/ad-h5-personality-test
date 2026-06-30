@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="新闻传播学定量论文研究设计前置诊断工具">
+  <title>CommQuant Paper Worthiness Evaluator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-mark" aria-hidden="true">CQ</div>
+      <div>
+        <p class="eyebrow">RESEARCH DESIGN DIAGNOSTIC · V1.4</p>
+        <h1>CommQuant Paper Worthiness Evaluator</h1>
+        <p class="title-cn">新闻传播学定量论文可写性评估系统</p>
+        <p class="subtitle">用于在正式写作和数据采集前，评估新闻传播学定量论文选题的可写性、可证性与可发表性。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="principles" aria-label="评估原则">
+      <span class="principle-index">判断顺序</span>
+      <span>传播问题</span><i>→</i><span>对象与数据</span><i>→</i><span>变量与理论</span><i>→</i><span>分析单位</span><i>→</i><span>模型与结论</span>
+    </section>
+
+    <div class="workspace-grid">
+      <section class="panel input-panel" aria-labelledby="input-title">
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">01 / RESEARCH PLAN</p>
+            <h2 id="input-title">研究计划输入</h2>
+            <p>信息越具体，诊断越接近真实研究设计。</p>
+          </div>
+          <span class="field-counter"><strong id="completed-count">0</strong>/20 已填写</span>
+        </div>
+
+        <fieldset class="mode-selector">
+          <legend>诊断模式</legend>
+          <label class="mode-option">
+            <input type="radio" name="diagnosisMode" value="quick">
+            <span>
+              <strong>快速选题诊断</strong>
+              <small>聚焦传播问题、研究对象、数据可能性与变量初步逻辑</small>
+            </span>
+          </label>
+          <label class="mode-option">
+            <input type="radio" name="diagnosisMode" value="full" checked>
+            <span>
+              <strong>完整研究计划诊断</strong>
+              <small>执行五大轴心、十九维评分与完整方法审计</small>
+            </span>
+          </label>
+          <p id="mode-help" class="mode-help">完整模式：建议填写全部 20 项，以提高评分可信度。</p>
+        </fieldset>
+
+        <form id="research-form" novalidate>
+          <div class="form-section">
+            <h3><span>01</span> 选题与理论</h3>
+
+            <div class="field full-width">
+              <label for="title">论文题目</label>
+              <input id="title" name="title" type="text" placeholder="用一句完整标题界定对象、问题与关系">
+              <p class="hint">建议包含研究对象与核心传播问题，避免只有平台名与方法名。</p>
+            </div>
+
+            <div class="field full-width full-mode-only">
+              <label for="targetJournal">目标期刊或目标层级</label>
+              <input id="targetJournal" name="targetJournal" type="text" placeholder="如：CSSCI 新闻传播学期刊 / SSCI Q2 / 硕士学位论文">
+              <p class="hint">目标层级会影响对理论增量、识别强度与方法透明度的要求。</p>
+            </div>
+
+            <div class="field full-width">
+              <label for="background">研究背景与问题意识</label>
+              <textarea id="background" name="background" rows="5" placeholder="描述现实传播现象、具体矛盾、知识缺口与研究必要性"></textarea>
+              <p class="hint">请说明“现实中发生了什么”以及“既有解释哪里不够”。</p>
+            </div>
+
+            <div class="field full-width">
+              <label for="researchQuestions">研究问题 RQ 或研究假设 H</label>
+              <textarea id="researchQuestions" name="researchQuestions" rows="5" placeholder="RQ1：……\nH1：……"></textarea>
+              <p class="hint">问题应能被现有数据与分析单位直接回答，并区分描述、解释与因果。</p>
+            </div>
+
+            <div class="field full-width">
+              <label for="theory">理论基础</label>
+              <textarea id="theory" name="theory" rows="4" placeholder="说明理论名称、关键命题以及它如何连接变量"></textarea>
+              <p class="hint">理论不是标签；需要说明变量关系为何成立。</p>
+            </div>
+
+            <div class="field full-width full-mode-only">
+              <label for="literature">CSSCI/SSCI 参考文献或拟借鉴论文</label>
+              <textarea id="literature" name="literature" rows="4" placeholder="列出作者、年份、题目、期刊，或说明拟借鉴的问题与方法范式"></textarea>
+              <p class="hint">至少提供 2—3 篇可核验的新闻传播学论文或经典文献锚点。</p>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3><span>02</span> 对象与数据</h3>
+
+            <div class="field full-width">
+              <label for="researchObject">研究对象</label>
+              <textarea id="researchObject" name="researchObject" rows="3" placeholder="如：政策发布后评论区中的责任归因表达，而非笼统的“公众态度”"></textarea>
+              <p class="hint">研究对象必须能在所选数据库中留下可观察痕迹。</p>
+            </div>
+
+            <div class="field full-width full-mode-only">
+              <label for="unitOfAnalysis">分析单位</label>
+              <input id="unitOfAnalysis" name="unitOfAnalysis" type="text" placeholder="帖子 / 评论 / 用户 / 账号 / 平台 / 事件 / 传播链 / 时间单元">
+              <p class="hint">必须明确层级与嵌套关系，不能混用帖子、用户与平台层结论。</p>
+            </div>
+
+            <div class="field full-width">
+              <label for="dataSource">数据来源</label>
+              <textarea id="dataSource" name="dataSource" rows="4" placeholder="说明平台、数据库、文本类型、账号类型或事件来源，以及选择依据"></textarea>
+              <p class="hint">不仅要写“来自哪里”，还要说明“为什么它适合回答问题”。</p>
+            </div>
+
+            <div class="field full-width full-mode-only">
+              <label for="scrapingPlan">数据抓取方案</label>
+              <textarea id="scrapingPlan" name="scrapingPlan" rows="6" placeholder="说明平台、关键词、账号、时间窗、字段、抓取方式和排除规则"></textarea>
+              <p class="hint">数据抓取需要说明平台、关键词、账号、时间窗、字段和排除规则。</p>
+            </div>
+
+            <div class="field full-mode-only">
+              <label for="timeWindow">时间窗口</label>
+              <textarea id="timeWindow" name="timeWindow" rows="3" placeholder="起止日期、事件节点与窗口依据"></textarea>
+              <p class="hint">连续时间、政策节点或事件窗口需要有理论或现实依据。</p>
+            </div>
+
+            <div class="field full-mode-only">
+              <label for="samplingRules">样本筛选规则</label>
+              <textarea id="samplingRules" name="samplingRules" rows="3" placeholder="纳入、排除、去重、抽样与缺失处理规则"></textarea>
+              <p class="hint">“全量数据”也需要边界、去重和可复现的排除标准。</p>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3><span>03</span> 变量与机制</h3>
+
+            <div class="field">
+              <label for="independentVariables">自变量设计</label>
+              <textarea id="independentVariables" name="independentVariables" rows="4" placeholder="变量名称、理论来源、测量方式与层级"></textarea>
+              <p class="hint">自变量必须有传播学理论依据，不能凭空命名。</p>
+            </div>
+
+            <div class="field">
+              <label for="dependentVariables">因变量设计</label>
+              <textarea id="dependentVariables" name="dependentVariables" rows="4" placeholder="变量名称、概念含义、测量方式与数据来源"></textarea>
+              <p class="hint">点赞、评论、转发需经论证，不能直接等同认同、参与或说服。</p>
+            </div>
+
+            <div class="field">
+              <label for="mechanismVariables">机制变量或中介变量设计</label>
+              <textarea id="mechanismVariables" name="mechanismVariables" rows="4" placeholder="说明机制链条、时间顺序与测量方式；若无中介，请说明作用机制"></textarea>
+              <p class="hint">机制应连接“为什么”和“如何”，而不只是再添加一个相关变量。</p>
+            </div>
+
+            <div class="field full-mode-only">
+              <label for="controlVariables">控制变量设计</label>
+              <textarea id="controlVariables" name="controlVariables" rows="4" placeholder="列出控制变量、选择依据及变量层级"></textarea>
+              <p class="hint">控制变量需来自理论与数据生成过程，不能机械堆放。</p>
+            </div>
+          </div>
+
+          <div class="form-section full-mode-only">
+            <h3><span>04</span> 方法、规范与结论</h3>
+
+            <div class="field full-width">
+              <label for="methods">研究方法与统计模型</label>
+              <textarea id="methods" name="methods" rows="6" placeholder="说明研究工具、编码流程、模型、公式、固定效应、标准误与方法—问题对应关系"></textarea>
+              <p class="hint">BERT、LDA、SEM、DID、ABM 或网络分析不是价值本身，需解释为何匹配研究问题。</p>
+            </div>
+
+            <div class="field full-width">
+              <label for="robustness">稳健性检验方案</label>
+              <textarea id="robustness" name="robustness" rows="4" placeholder="替代变量、替代模型、替代样本、敏感性分析、编码一致性或模型性能"></textarea>
+              <p class="hint">至少回答：换测量、换模型或换样本后，结论是否仍成立？</p>
+            </div>
+
+            <div class="field full-width">
+              <label for="ethics">伦理与合规说明</label>
+              <textarea id="ethics" name="ethics" rows="3" placeholder="公开数据边界、匿名化、用户隐私、平台条款、引用与数据保存"></textarea>
+              <p class="hint">公开可见不等于可无限使用；应说明隐私保护与合规边界。</p>
+            </div>
+
+            <div class="field full-width">
+              <label for="expectedConclusion">作者预期结论</label>
+              <textarea id="expectedConclusion" name="expectedConclusion" rows="5" placeholder="写出拟主张的结论，并明确其适用范围与因果边界"></textarea>
+              <p class="hint">先判断证据能支持什么，再决定结论能写到什么程度。</p>
+            </div>
+          </div>
+        </form>
+
+        <div class="action-bar">
+          <div class="case-loader">
+            <label for="test-case-select">测试样本库</label>
+            <select id="test-case-select">
+              <option value="">选择一个校准案例（共 10 个）</option>
+            </select>
+            <span id="case-expected" class="case-expected"></span>
+          </div>
+          <button type="button" id="evaluate-btn" class="button button-primary">开始评估 <span>→</span></button>
+          <button type="button" id="example-btn" class="button button-secondary">填入示例研究计划</button>
+          <button type="button" id="clear-btn" class="button button-ghost">清空输入</button>
+          <p id="save-status" class="save-status" aria-live="polite">输入将自动保存在本地</p>
+        </div>
+      </section>
+
+      <aside class="panel result-panel" aria-labelledby="result-title">
+        <div id="empty-state" class="empty-state">
+          <div class="empty-graphic" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <p class="section-kicker">02 / DIAGNOSTIC REPORT</p>
+          <h2 id="result-title">等待评估</h2>
+          <p>完成研究计划后点击“开始评估”。系统将生成十九维评分、硬性降级判断、红队意见与最低可行研究设计。</p>
+          <ul class="empty-checklist">
+            <li>规则型引擎，本地运行</li>
+            <li>不上传任何研究数据</li>
+            <li>结果可复制与导出 Markdown</li>
+          </ul>
+        </div>
+
+        <div id="result-content" class="result-content hidden" aria-live="polite">
+          <div class="result-toolbar">
+            <div>
+              <p class="section-kicker">02 / DIAGNOSTIC REPORT</p>
+              <h2>评估结果</h2>
+            </div>
+            <span id="result-time" class="result-time"></span>
+          </div>
+
+          <section class="verdict-card">
+            <div class="grade-wrap">
+              <span class="grade-label">最终等级</span>
+              <strong id="grade-badge" class="grade-badge grade-c">C</strong>
+            </div>
+            <div class="score-wrap">
+              <span>综合分</span>
+              <strong><span id="total-score">0.00</span><small>/ 5</small></strong>
+              <p id="raw-grade-note"></p>
+            </div>
+            <div class="confidence-wrap">
+              <span>评分可信度</span>
+              <strong id="confidence-badge" class="confidence-badge confidence-medium">中</strong>
+              <p id="confidence-reason"></p>
+            </div>
+            <div id="mode-badge" class="mode-badge">完整研究计划诊断</div>
+            <div class="completeness-wrap">
+              <div class="completeness-meta">
+                <span>研究设计完整度</span>
+                <strong><span id="completeness-score">0</span>/100</strong>
+              </div>
+              <div class="completeness-track"><div id="completeness-fill" class="completeness-fill"></div></div>
+              <p id="completeness-explanation"></p>
+              <p id="completeness-warning" class="completeness-warning hidden"></p>
+            </div>
+            <p id="one-line-verdict" class="one-line-verdict"></p>
+            <div id="continue-badge" class="continue-badge"></div>
+          </section>
+
+          <section id="axis-section" class="result-section">
+            <div class="result-section-heading">
+              <span>01</span>
+              <h3 id="axis-heading-title">五大轴心</h3>
+            </div>
+            <div id="axis-bars" class="axis-bars"></div>
+          </section>
+
+          <section class="result-section">
+            <div class="result-section-heading">
+              <span>02</span>
+              <h3>问题—数据—变量—方法对应矩阵</h3>
+            </div>
+            <div class="table-wrap alignment-table-wrap">
+              <table>
+                <thead><tr><th>要素</th><th>提取内容</th><th>对应项</th><th>判断</th></tr></thead>
+                <tbody id="alignment-matrix"></tbody>
+              </table>
+            </div>
+            <div id="alignment-alerts" class="alignment-alerts"></div>
+          </section>
+
+          <section class="result-section">
+            <div class="result-section-heading">
+              <span>03</span>
+              <h3 id="matrix-heading-title">十九维评分矩阵</h3>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>维度</th><th>分数</th><th>诊断</th><th>风险</th></tr></thead>
+                <tbody id="score-matrix"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="result-section warning-section">
+            <div class="result-section-heading">
+              <span>04</span>
+              <h3>硬性降级触发项</h3>
+            </div>
+            <div id="downgrades"></div>
+          </section>
+
+          <section class="result-section">
+            <div class="result-section-heading"><span>05</span><h3>专题诊断</h3></div>
+            <div id="diagnostic-accordions" class="diagnostic-accordions"></div>
+          </section>
+
+          <section class="result-section literature-section">
+            <div class="result-section-heading"><span>06</span><h3>本地文献锚定匹配</h3></div>
+            <div id="literature-anchor-result"></div>
+          </section>
+
+          <section class="result-section risk-section">
+            <div class="result-section-heading"><span>07</span><h3>审稿风险优先级</h3></div>
+            <div id="reviewer-risks" class="priority-risk-list"></div>
+          </section>
+
+          <section class="result-section revision-section">
+            <div class="result-section-heading"><span>08</span><h3>修改路径</h3></div>
+            <div id="revision-path" class="revision-grid"></div>
+          </section>
+
+          <section class="result-section mvp-section">
+            <div class="result-section-heading"><span>09</span><h3>最低可行研究设计（增强版）</h3></div>
+            <div id="minimum-design" class="minimum-design"></div>
+          </section>
+
+          <section class="result-section audit-section">
+            <div class="result-section-heading"><span>10</span><h3>规则审计摘要</h3></div>
+            <div id="rule-audit" class="audit-grid"></div>
+          </section>
+
+          <section class="result-section trace-section">
+            <details id="rule-trace-panel" class="diagnostic-item">
+              <summary>11 · 规则追踪（默认折叠）</summary>
+              <div class="diagnostic-body"><div id="rule-trace"></div></div>
+            </details>
+          </section>
+
+          <section class="result-section">
+            <div class="result-section-heading"><span>12</span><h3>重复惩罚检测</h3></div>
+            <div id="duplicate-penalties"></div>
+          </section>
+
+          <section class="result-section">
+            <div class="result-section-heading"><span>13</span><h3>权重敏感性分析</h3></div>
+            <div id="weight-sensitivity"></div>
+          </section>
+
+          <div class="report-actions">
+            <label class="report-mode-control" for="report-mode">报告模式
+              <select id="report-mode">
+                <option value="full">完整诊断版</option>
+                <option value="advisor">导师沟通版</option>
+                <option value="showcase">产品展示版</option>
+              </select>
+            </label>
+            <button type="button" id="copy-btn" class="button button-secondary">复制当前报告</button>
+            <button type="button" id="download-btn" class="button button-primary">下载 Markdown 报告</button>
+            <p id="action-feedback" role="status"></p>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section id="calibration-dashboard" class="panel calibration-panel" aria-labelledby="calibration-title">
+      <div class="panel-heading calibration-heading">
+        <div>
+          <p class="section-kicker">03 / CALIBRATION DASHBOARD</p>
+          <h2 id="calibration-title">校准测试</h2>
+          <p>批量运行人工标注案例，检查规则高估、低估和不同案例类型的误判情况。</p>
+        </div>
+        <div class="calibration-run-controls">
+          <label for="calibration-scope">运行范围</label>
+          <select id="calibration-scope">
+            <option value="builtin">只运行内置案例</option>
+            <option value="external">只运行外部案例</option>
+            <option value="all">运行全部案例</option>
+          </select>
+          <label class="blind-toggle"><input type="checkbox" id="blind-calibration"> 盲评模式</label>
+          <button type="button" id="run-calibration-btn" class="button button-primary">运行校准</button>
+        </div>
+      </div>
+
+      <div id="calibration-empty" class="calibration-empty">
+        当前内置 10 个 v1.1 校准案例。运行后不会修改研究计划输入或最近一次单篇评估。
+      </div>
+
+      <div id="calibration-results" class="hidden">
+        <div class="calibration-export-bar">
+          <button type="button" id="reveal-expected-btn" class="button button-secondary hidden">揭示人工预期等级</button>
+          <button type="button" id="export-calibration-json-btn" class="button button-ghost">导出校准 JSON</button>
+          <button type="button" id="export-calibration-csv-btn" class="button button-ghost">导出校准 CSV</button>
+          <button type="button" id="download-calibration-md-btn" class="button button-ghost">下载校准 Markdown</button>
+        </div>
+        <div id="calibration-stats" class="calibration-stats"></div>
+
+        <div class="calibration-subsection">
+          <h3>误判统计摘要</h3>
+          <div id="misclassification-summary" class="misclassification-summary"></div>
+        </div>
+
+        <div class="calibration-subsection">
+          <h3>实际等级分布</h3>
+          <div id="calibration-distribution" class="grade-distribution"></div>
+        </div>
+
+        <div class="calibration-subsection">
+          <h3>案例结果</h3>
+          <p class="table-scroll-hint">表格内容较多，可左右滑动查看全部列 →</p>
+          <div class="table-wrap calibration-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>标题</th><th>类型</th><th>标签</th><th>状态</th><th>人工</th><th>系统</th><th>分数</th>
+                  <th>结果</th><th>幅度</th><th>降级</th><th>风险</th><th>可信</th>
+                </tr>
+              </thead>
+              <tbody id="calibration-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="calibration-subsection">
+          <h3>各案例类型误判</h3>
+          <div id="calibration-type-stats" class="type-stats-grid"></div>
+        </div>
+
+        <div class="calibration-subsection misclassification-section">
+          <div class="subsection-heading">
+            <h3>误判日志</h3>
+            <button type="button" id="copy-misclassification-btn" class="button button-secondary">复制误判日志</button>
+          </div>
+          <div id="misclassification-log"></div>
+          <div class="correction-history">
+            <h4>误判修正记录</h4>
+            <div id="correction-records"></div>
+          </div>
+          <p id="misclassification-feedback" class="save-status" role="status"></p>
+        </div>
+      </div>
+
+      <div class="calibration-subsection case-bank-section">
+        <div class="subsection-heading">
+          <div>
+            <h3>外部案例库</h3>
+            <p class="hint">外部案例独立保存在当前浏览器，不修改内置校准案例。</p>
+          </div>
+          <button type="button" id="export-external-cases-btn" class="button button-secondary">导出全部案例 JSON</button>
+        </div>
+
+        <form id="external-case-form" class="external-case-form">
+          <input type="hidden" id="external-case-id">
+          <div class="field"><label for="external-case-title">案例标题</label><input id="external-case-title" required></div>
+          <div class="field"><label for="external-case-type">案例类型</label><select id="external-case-type"></select></div>
+          <div class="field"><label for="external-case-status">质量状态</label><select id="external-case-status"></select></div>
+          <div class="field"><label for="external-case-grade">人工等级</label>
+            <select id="external-case-grade"><option value="">未标注</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="field"><label for="external-case-reason">人工等级理由</label><textarea id="external-case-reason" rows="2"></textarea></div>
+          <fieldset class="field full-width tag-fieldset">
+            <legend>风险与处理标签（可多选）</legend>
+            <div id="external-case-tags" class="tag-checkbox-grid"></div>
+          </fieldset>
+          <div class="field"><label for="reviewer-grade">复核等级</label>
+            <select id="reviewer-grade"><option value="">未复核</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="field"><label for="final-decision">最终决策</label>
+            <select id="final-decision"><option value="">未决定</option><option>继续</option><option>重构</option><option>放弃</option><option>暂缓</option></select>
+          </div>
+          <div class="field full-width"><label for="reviewer-reason">复核理由</label><textarea id="reviewer-reason" rows="2"></textarea></div>
+          <div class="field full-width"><label for="correction-notes">修正说明</label><textarea id="correction-notes" rows="2"></textarea></div>
+          <label class="review-adjustment full-width"><input type="checkbox" id="rule-adjustment-needed"> 本案例提示需要调整评分规则</label>
+          <div class="field full-width"><label for="external-case-notes">备注</label><textarea id="external-case-notes" rows="2"></textarea></div>
+          <div class="field full-width"><label for="external-case-input">inputData（JSON）</label>
+            <textarea id="external-case-input" rows="8" placeholder='{"diagnosisMode":"full","title":"……","researchQuestions":"……"}'></textarea>
+          </div>
+          <div class="case-form-actions full-width">
+            <button type="submit" class="button button-primary">保存案例</button>
+            <button type="button" id="cancel-external-edit-btn" class="button button-ghost">取消编辑</button>
+            <span id="external-case-feedback" class="save-status"></span>
+          </div>
+        </form>
+
+        <details class="real-case-template-panel">
+          <summary>真实样本 JSON 模板</summary>
+          <p>复制后替换示例字段；未填写 expectedGrade 的案例会自动标记为“待标注”，且不计入一致率。</p>
+          <pre id="real-case-template"></pre>
+          <button type="button" id="copy-real-case-template-btn" class="button button-ghost">复制模板</button>
+        </details>
+
+        <div class="external-import">
+          <label for="external-case-import">从 JSON 文本导入</label>
+          <textarea id="external-case-import" rows="5" placeholder='[{"id":"real-001","title":"真实计划","caseType":"真实研究计划","tags":["可修补"],"status":"待标注","expectedGrade":"","inputData":{},"humanReview":{},"notes":""}]'></textarea>
+          <button type="button" id="import-external-cases-btn" class="button button-secondary">导入 JSON</button>
+        </div>
+
+        <div class="table-wrap external-case-table-wrap">
+          <table>
+            <thead><tr><th>标题</th><th>类型</th><th>标签</th><th>状态</th><th>人工等级</th><th>复核/决策</th><th>更新时间</th><th>操作</th></tr></thead>
+            <tbody id="external-case-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>规则型前置诊断工具 · 不替代导师意见、真实文献核验或期刊审稿</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
